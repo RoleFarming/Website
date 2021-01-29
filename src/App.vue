@@ -16,7 +16,9 @@
       </v-container>
     </v-app-bar>
 
+    <v-main class="lighten-5">
     <router-view />
+    </v-main>
   </v-app>
 </template>
 
@@ -34,10 +36,10 @@ export default {
       links: [
         'Home',
         'Staking',
-        'Rewards',
-        'About',
+        'Contact',
       ],
 
     })
 };
 </script>
+
