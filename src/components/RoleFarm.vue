@@ -13,12 +13,9 @@
               <p>These contracts have been internally audited and await further audit. </p>
               <p>More purpose to come. The internal development team is working on 11 days sprints.</p>
               <p>We welcome you to our realm and hope you enjoy the experience as we grow as a a community lead and funded LARPG. </p>
-              <p>Welcome to "placeholder"</p>
+              <p>Welcome to Agurus</p>
               </v-container>
            </v-sheet>
-          </v-col>
-          <v-spacer/>
-        </v-row>
             <v-container style="width:50%"  body-1 text-center>
             <v-carousel style="width:auto;height:33em !important;"
             dark
@@ -32,16 +29,20 @@
             </v-carousel>
             </v-container>
 
- 
+            <v-sheet class="mt-2" rounded="lg" jusitfy-center>
+            <v-container mx-auto body-1 class="text-center justify-center align-center">
+            This is just a preview of what the team is up to. Something something segue 
+            <v-img class=mx-auto width=50% src="/feeling.gif" />
+            You can start your journey early, and join the community at <a href="https://t.me/rfbtctech">the RFbtc Telegram </a>
+            </v-container>
+            </v-sheet>
+          </v-col>
+          <v-spacer/>
+        </v-row>
         </v-container>
 </template>
 <script>
-
-
-
-
   export default {
-    props: ['web3'],
     data: () => ({
       images: [{src: '/Stairway_to_Heaven.webp', text: '10,000 RFbtc Donated to the Staking Contract ', title: 'Stairway to Heaven'},
                {src: '/Roadway_to_Awe.webp', text: '50,000 Donated ot the staking contract ', title: 'Roadway to Awe'},

@@ -1,5 +1,7 @@
 <template>
+<main>
     <RoleFarm/>
+    </main>
 </template>
 
 <script>
@@ -9,7 +11,7 @@ import RoleFarm from '@/components/RoleFarm.vue'
 export default {
   name: 'Home',
   components: {
-    RoleFarm
-  }
+    RoleFarm,
+  },
 }
 </script>
