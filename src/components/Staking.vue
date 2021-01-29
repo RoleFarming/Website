@@ -1,13 +1,14 @@
 <template>
-      <v-container>
+      <v-container class="rounded-lg mt-5 justify-center secondary soft">
         <v-row>
           <v-spacer/>
           <v-col cols=10>
-            <v-sheet min-height="70vh" rounded="lg" jusitfy-center>
-              <v-container pb-10 align-center text-center text-h1>
-                RoleFarm 
+            <v-sheet class="mt-2" rounded="lg" jusitfy-center>
+              <v-container pb-2 align-center text-center style="color:black"  accent--text class="swirly">
+              <span style="color:#862C5A;">ROLE</span><span style="color:#309167;">FARM</span><span>btc</span>
               </v-container>
-              <v-spacer />
+              <v-divider class="mb-2"></v-divider>
+
               <v-container ma-auto col-8 text-center>
               <v-btn rounded class="my-10"  primary>Approve</v-btn>
               <Table :data=tab />
@@ -40,11 +41,6 @@
               <v-col><v-subheader class="my-5 justify-center text-center">{{fees[0]}}% fee to claim</v-subheader></v-col>
               </v-row>
               </v-container>
-            </v-sheet>
-          </v-col>
-          <v-spacer/>
-        </v-row>
-        <v-spacer/>
         <v-container class="col-2" pb-10 align-center text-center>
           <v-row class="display-1 justify-center text-center">Staking APR</v-row>
           <v-row v-for="item in apr" :key="item.name" >
@@ -53,6 +49,12 @@
           </v-row>
         </v-container>
         <v-spacer/>
+            </v-sheet>
+          </v-col>
+          <v-spacer/>
+        </v-row>
+        <v-spacer/>
+
       </v-container>
 </template>
 <script>
@@ -68,7 +70,6 @@
     components: {
       Table
     },
-    props: ['web3'],
     data: () => ({
       web3: undefined,
       bal: 0,
@@ -83,6 +84,7 @@
             {name: "Weekly", value: '0'}],
       stake_amt: 0,
       unstake_amt: 0,
+      allowance: 0,
     }),
     methods: {
       async refresh_data() {
@@ -93,6 +95,8 @@
         let address = (await web3.currentProvider)["selectedAddress"];
         this.bal = await rfBTC.methods.balanceOf(address).call();
         this.staked = await m.depositedTokens(address).call();
+        this.allowance = await rfBTC.methods.allowance(address, staking.options.address).call();
+        console.log(this.allowance);
         let pending = m.getPendingDivs(address).call();
         let earned = m.totalEarnedTokens(address).call();
         this.tab = [{name: "Balance", value: fmt_rfbtc(this.bal)},
