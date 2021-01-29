@@ -2,14 +2,14 @@
       <v-container class="rounded-lg mt-5 justify-center secondary soft">
         <v-row>
           <v-spacer/>
-          <v-col cols=10>
+          <v-col class="col-md-10 col-sm-12">
             <v-sheet class="mt-2" rounded="lg" jusitfy-center>
               <v-container pb-2 align-center text-center style="color:black"  accent--text class="swirly">
               <span style="color:#862C5A;">ROLE</span><span style="color:#309167;">FARM</span><span>btc</span>
               </v-container>
               <v-divider class="mb-2"></v-divider>
 
-              <v-container ma-auto col-8 text-center>
+              <v-container ma-auto col-10 text-center>
               <v-btn rounded class="my-10"  primary>Approve</v-btn>
               <Table :data=tab />
               </v-container>
@@ -28,7 +28,7 @@
                   <span top>Max Unstake</span>
                 </v-tooltip>
               </v-text-field></v-col>
-              <v-col class="display-1 mt-5"> {{pending}} rfBTC</v-col>
+              <v-col class="vw-text  mt-5"> {{pending}} rfBTC</v-col>
               </v-row>
               <v-row ma-auto text-center>
               <v-col><v-btn rounded primary @click=this.stake>Stake</v-btn></v-col>
@@ -41,8 +41,8 @@
               <v-col><v-subheader class="my-5 justify-center text-center">{{fees[0]}}% fee to claim</v-subheader></v-col>
               </v-row>
               </v-container>
-        <v-container class="col-2" pb-10 align-center text-center>
-          <v-row class="display-1 justify-center text-center">Staking APR</v-row>
+        <v-container class="col-4" style="min-width: 15em"  pb-10 align-center text-center>
+          <v-row class="vw-text justify-center text-center">Staking APR</v-row>
           <v-row v-for="item in apr" :key="item.name" >
             <v-col class="body-1 text-left">{{ item.name }}</v-col>
             <v-col class="body-1 text-right">{{ item.value }}%</v-col>
@@ -138,3 +138,9 @@
     },
   }
 </script>
+<style>
+.vw-text {
+  font-family: ubuntu;
+  font-size: 3vw;
+}
+</style>

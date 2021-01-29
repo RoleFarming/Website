@@ -2,9 +2,9 @@
       <v-container class="rounded-lg mt-5 justify-center secondary soft">
         <v-row>
           <v-spacer/>
-          <v-col cols=10>
-            <v-sheet class="mt-2" rounded="lg" jusitfy-center>
-              <v-container pb-2 align-center text-center style="color:black"  accent--text class="swirly">
+          <v-col class="col-md-10 col-sm-12">
+            <v-sheet class="mt-2 mx-auto" rounded="lg" jusitfy-center>
+              <v-container pb-2 align-center text-center style="font-size: 2vw color:black"  accent--text class="swirly">
               <span style="color:#862C5A;">ROLE</span><span style="color:#309167;">FARM</span><span>btc</span>
               </v-container>
               <v-divider class="mb-2"></v-divider>
@@ -16,14 +16,14 @@
               <p>Welcome to Agurus</p>
               </v-container>
            </v-sheet>
-            <v-container style="width:50%"  body-1 text-center>
-            <v-carousel style="width:auto;height:33em !important;"
+            <v-container style="min-width:50%;min-width:400px"  body-1 text-center>
+            <v-carousel style="width:auto;height:auto !important;"
             dark
             hide-delimiter-background
             delimiter-icon="mdi-shield"
             >
-            <v-carousel-item style="height:130%;" v-for="(item) in images" :key="item.src" >
-            <img style="width:auto;height:85%; filter: drop-shadow(5px 5px 15px #222222); " :src="item.src" :alt="blah"/>
+            <v-carousel-item style="max-width:100%;height:130%;" v-for="(item) in images" :key="item.src" >
+            <img style="object-fit: contain; max-width: 100%;width:auto;height:85%; filter: drop-shadow(5px 5px 15px #222222); " :src="item.src" :alt="blah"/>
             <div class="ma-3">{{item.title}}: {{item.text}}</div>
             </v-carousel-item>
             </v-carousel>
@@ -31,7 +31,7 @@
 
             <v-sheet class="mt-2" rounded="lg" jusitfy-center>
             <v-container mx-auto body-1 class="text-center justify-center align-center">
-            This is just a preview of what the team is up to. Something something segue 
+            This is just a preview of what the team is up to. Exciting things await in the following week.
             <v-img class=mx-auto width=50% src="/feeling.gif" />
             You can start your journey early, and join the community at <a href="https://t.me/rfbtctech">the RFbtc Telegram </a>
             </v-container>
@@ -56,7 +56,7 @@
 
 <style>
 .swirly {
-  font-size: 6rem;
+  font-size: 6vw;
   line-height: 6rem;
   letter-spacing: -.015625em;
   text-transform: false;

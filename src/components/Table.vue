@@ -3,8 +3,8 @@
     <template v-slot:default>
       <tbody>
         <tr v-for="item in data" :key="item.name" >
-          <td class="display-1 text-left">{{ item.name }}</td>
-          <td class="display-1 text-right">{{ item.value }} rfBTC</td>
+          <td style="font-size: 2.5vw" class="vw-text text-left">{{ item.name }}</td>
+          <td style="font-size: 2.5vw" class="vw-text text-right">{{ item.value }} rfBTC</td>
         </tr>
       </tbody>
     </template>
@@ -16,3 +16,10 @@
     props: ["data"],
 }
 </script>
+<style>
+.vw-text {
+  font-family: ubuntu;
+  font-size: 3vw;
+}
+
+</style>

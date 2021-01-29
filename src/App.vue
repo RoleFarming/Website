@@ -19,7 +19,6 @@
 
       </v-container>
     </v-app-bar>
-
     <v-main class="secondary fade">
     <router-view />
     </v-main>
@@ -40,7 +39,6 @@ export default {
       links: [
         'Home',
         'Staking',
-        'Contact',
       ],
 
     })
