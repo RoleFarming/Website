@@ -45,7 +45,7 @@
   export default {
     data: () => ({
       images: [{src: '/Stairway_to_Heaven.webp', text: '10,000 RFbtc Donated to the Staking Contract ', title: 'Stairway to Heaven'},
-               {src: '/Roadway_to_Awe.webp', text: '50,000 Donated ot the staking contract ', title: 'Roadway to Awe'},
+               {src: '/Roadway_to_Awe.webp', text: '50,000 Donated to the staking contract ', title: 'Roadway to Awe'},
                {src: '/Inner_Sanctum.webp', text: '100,000 RFbtc donated to the staking contract', title: 'Inner Sanctum'},
                {src: '/Return_to_the_Source.webp', text: '160,000 RFbtc donated to the staking contract', title: 'Return to the Source'},],
       async foo() {console.log(await this.web3())},
