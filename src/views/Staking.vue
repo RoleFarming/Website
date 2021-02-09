@@ -7,16 +7,13 @@
 
 <script>
 import Staking from '@/components/Staking.vue'
-import Dialog from '@/components/Dialog.vue'
 
 export default {
   name: 'Home',
   components: {
-    Staking,
-    Dialog
+    Staking
   },
   created() {
-    this.$dialog.show(Dialog);
   }
 
 }

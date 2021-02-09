@@ -10,19 +10,24 @@
               <v-divider class="mb-2"></v-divider>
 
               <v-container ma-auto col-10 text-center>
-              <v-btn rounded class="my-10"  primary>Approve</v-btn>
               <Table :data=tab />
               </v-container>
 
+              <v-container ma-auto col-3 text-center>
+              <v-text-field  solo suffix="rfBTC" label="Approve Contract" v-model=allowance :error-messages="allowance_errors" />
+              <v-btn rounded class="my-10"  primary @click=approve>Approve</v-btn>
+              </v-container>
+
+
               <v-container ma-auto col-8 text-center>
               <v-row ma-auto text-center>
-              <v-col> <v-text-field  solo suffix="rfBTC" label="Stake" :value=stake_amt>
+              <v-col> <v-text-field  solo suffix="rfBTC" label="Stake" v-model=stake_amt @input=up>
                 <v-tooltip slot="append"  top>
                   <template v-slot:activator="{ on }"> <v-icon v-on="on" color="primary" dark @click=maxStake> mdi-rocket-launch </v-icon> </template>
                   <span top>Max Stake</span>
                 </v-tooltip>
               </v-text-field></v-col>
-              <v-col> <v-text-field solo suffix="rfBTC" label="Unstake" append-icon="mdi-moon-full" :value=unstake_amt>
+              <v-col> <v-text-field solo suffix="rfBTC" label="Unstake" append-icon="mdi-moon-full" v-model=unstake_amt>
                 <v-tooltip slot="append"  top>
                   <template v-slot:activator="{ on }"> <v-icon v-on="on" @click=maxUnstake> mdi-moon-full </v-icon> </template>
                   <span top>Max Unstake</span>
@@ -82,21 +87,28 @@
       apr: [{name: "Yearly", value: '0'},
             {name: "Monthly", value: '0'},
             {name: "Weekly", value: '0'}],
-      stake_amt: 0,
-      unstake_amt: 0,
-      allowance: 0,
+      stake_amt: "0",
+      unstake_amt: "0",
+      allowance: "0",
+      allowance_errors: [],
     }),
     methods: {
+      up() {
+        console.log(this.stake_amt);
+      },
       async refresh_data() {
         const {rfBTC, staking, web3} = await getWeb3();
         this.web3 = web3;
+        this.staking = staking;
+        this.rfBTC = rfBTC;
         let fmt_rfbtc = (val) => web3.utils.fromWei(val, 'rfbtc');
         let m = staking.methods;
         let address = (await web3.currentProvider)["selectedAddress"];
+        this.address = address;
         this.bal = await rfBTC.methods.balanceOf(address).call();
         this.staked = await m.depositedTokens(address).call();
-        this.allowance = await rfBTC.methods.allowance(address, staking.options.address).call();
-        console.log(this.allowance);
+        let allowance = await rfBTC.methods.allowance(address, staking.options.address).call();
+        this.allowance = this.web3.utils.fromWei(allowance, 'rfbtc');
         let pending = m.getPendingDivs(address).call();
         let earned = m.totalEarnedTokens(address).call();
         this.tab = [{name: "Balance", value: fmt_rfbtc(this.bal)},
@@ -109,17 +121,25 @@
         this.apr[1]['value'] = aprConvert(rewardRate, 1/365.25*30);
         this.apr[2]['value'] = aprConvert(rewardRate, 1/365.25*7);
         this.pending = await pending;
-        //web3.eth.subscribe('logs', {address: staking.options.address}, (error, result) => console.log(result));
         console.log(await staking.methods.depositedTokens(address).call());
       },
+      async approve() {
+        let approveAmt = this.web3.utils.toWei(this.allowance, 'rfbtc');
+        await this.rfBTC.methods.approve(this.staking.options.address, approveAmt).send({from: this.address});
+      },
       async stake() {
-        console.log(this.stake_amt);
+        let depositAmt = this.web3.utils.toWei(this.stake_amt, 'rfbtc');
+        let res = await this.staking.methods.deposit(depositAmt).send({from: this.address})
+        console.log(res);
       },
       async unstake() {
-        console.log(this.unstake_amt);
+        let withdrawAmt = this.web3.utils.toWei(this.unstake_amt, 'rfbtc');
+        let res = await this.staking.methods.withdraw(withdrawAmt).send({from: this.address})
+        console.log(res);
       },
       async claim() {
-        console.log(this.pending);
+        let res = await this.staking.methods.claimDivs().send({from: this.address});
+        console.log(res);
       },
       async maxUnstake() {
         this.unstake_amt = this.web3.utils.fromWei(this.staked, 'rfbtc');
