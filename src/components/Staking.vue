@@ -13,13 +13,13 @@
               <Table :data=tab />
               </v-container>
 
-              <v-container ma-auto col-3 text-center>
-              <v-text-field  solo suffix="rfBTC" label="Approve Contract" v-model=allowance :error-messages="allowance_errors" />
-              <v-btn rounded class="my-10"  primary @click=approve>Approve</v-btn>
+              <v-container col-4>
+              <v-row wrap align-baseline>
+              </v-row>
               </v-container>
 
 
-              <v-container ma-auto col-8 text-center>
+              <v-container wrap ma-auto col-8 text-center>
               <v-row ma-auto text-center>
               <v-col> <v-text-field  solo suffix="rfBTC" label="Stake" v-model=stake_amt @input=up>
                 <v-tooltip slot="append"  top>
@@ -33,17 +33,20 @@
                   <span top>Max Unstake</span>
                 </v-tooltip>
               </v-text-field></v-col>
-              <v-col class="vw-text  mt-5"> {{pending}} rfBTC</v-col>
+              <v-col class="vw-text ma-auto"> {{pending}} rfBTC</v-col>
+              <v-col> <v-text-field  solo suffix="rfBTC" label="Contract Allowance" v-model=approve_amt :error-messages="allowance_errors" /></v-col>
               </v-row>
               <v-row ma-auto text-center>
               <v-col><v-btn rounded primary @click=this.stake>Stake</v-btn></v-col>
               <v-col><v-btn rounded primary @click=this.unstake>Unstake</v-btn></v-col>
               <v-col><v-btn rounded primary @click=this.claim>Claim</v-btn></v-col>
+              <v-col><v-btn rounded class="mt-2" primary @click=approve>Approve</v-btn></v-col>
               </v-row>
               <v-row ma-auto text-center>
               <v-col><v-subheader class="my-5 justify-center text-center">{{fees[0]}}% fee to stake</v-subheader></v-col>
               <v-col><v-subheader class="my-5 justify-center text-center">{{fees[1]}}% fee to unstake</v-subheader></v-col>
               <v-col><v-subheader class="my-5 justify-center text-center">{{fees[0]}}% fee to claim</v-subheader></v-col>
+              <v-col />
               </v-row>
               </v-container>
         <v-container class="col-4" style="min-width: 15em"  pb-10 align-center text-center>
@@ -90,6 +93,7 @@
       stake_amt: "0",
       unstake_amt: "0",
       allowance: "0",
+      appprove_amt: "0",
       allowance_errors: [],
     }),
     methods: {
@@ -107,11 +111,11 @@
         this.address = address;
         this.bal = await rfBTC.methods.balanceOf(address).call();
         this.staked = await m.depositedTokens(address).call();
-        let allowance = await rfBTC.methods.allowance(address, staking.options.address).call();
-        this.allowance = this.web3.utils.fromWei(allowance, 'rfbtc');
+        this.allowance = await rfBTC.methods.allowance(address, staking.options.address).call();
         let pending = m.getPendingDivs(address).call();
         let earned = m.totalEarnedTokens(address).call();
         this.tab = [{name: "Balance", value: fmt_rfbtc(this.bal)},
+                    {name: "Approved Deposit Limit", value: fmt_rfbtc(this.allowance)},
                     {name: "Staked", value: fmt_rfbtc(this.staked)},
                     {name: "Total Earned", value: fmt_rfbtc(await earned)},
         ];
@@ -161,6 +165,6 @@
 <style>
 .vw-text {
   font-family: ubuntu;
-  font-size: 3vw;
+  font-size: 2vw;
 }
 </style>
