@@ -128,7 +128,7 @@
         console.log(await staking.methods.depositedTokens(address).call());
       },
       async approve() {
-        let approveAmt = this.web3.utils.toWei(this.allowance, 'rfbtc');
+        let approveAmt = this.web3.utils.toWei(this.approve_amt, 'rfbtc');
         await this.rfBTC.methods.approve(this.staking.options.address, approveAmt).send({from: this.address});
       },
       async stake() {
